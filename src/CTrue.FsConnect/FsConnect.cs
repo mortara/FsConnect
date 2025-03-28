@@ -630,5 +630,25 @@ namespace CTrue.FsConnect
             _disposed = true;
         }
 
+        public void RequestSystemState(Enum id, String state)
+        {
+            _simConnect?.RequestSystemState(id, state);
+        }
+
+        public void SendEvent(Enum id, int parameter = 0)
+        {
+            _simConnect?.TransmitClientEvent(SimConnect.SIMCONNECT_OBJECT_ID_USER, id, (uint)parameter, GROUP_IDS.GROUP_1, SIMCONNECT_EVENT_FLAG.GROUPID_IS_PRIORITY);
+        }
+
+        public void RequestPeriodicData(Enum requestId)
+        {
+            _simConnect?.RequestDataOnSimObject(requestId, requestId, 0, SIMCONNECT_PERIOD.SIM_FRAME, SIMCONNECT_DATA_REQUEST_FLAG.CHANGED, 0, 0, 0);
+        }
+
+        public void UnregisterPeriodicDataRequest(Enum requestId)
+        {
+            _simConnect?.RequestDataOnSimObject(requestId, requestId, 0, SIMCONNECT_PERIOD.NEVER, SIMCONNECT_DATA_REQUEST_FLAG.CHANGED, 0, 0, 0);
+        }
+
     }
 }
